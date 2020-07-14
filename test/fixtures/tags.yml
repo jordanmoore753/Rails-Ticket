@@ -2,8 +2,6 @@
 
 one:
   name: problem
-  ticket: 1
 
 two:
   name: rails
-  ticket: 2

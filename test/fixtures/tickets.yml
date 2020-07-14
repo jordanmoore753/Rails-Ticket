@@ -5,21 +5,29 @@ one:
   body: The first ticket.
   status: new
   project: 1
+  user_id: 1
+  assignee: 2
 
 two:
   name: Ticket 2
   body: The second ticket.
   status: blocked
   project: 1
+  user_id: 2
+  assignee: 2
 
 three:
   name: Ticket 3
   body: The third ticket.
   status: in_progress
   project: 2
+  user_id: 2
+  assignee: 1
 
 four:
   name: Ticket 4
   body: The fourth ticket.
   status: fixed
   project: 2
+  user_id: 2
+  assignee: 1
