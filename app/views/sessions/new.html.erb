@@ -1,0 +1,11 @@
+<% provide(:title, 'Login') %>
+<% provide(:button_text, 'Login') %>
+
+<h1>Login</h1>
+<%= form_with(url: login_url, scope: :session, local: true) do |f| %>
+  <%= f.label :email, class: '' %>
+  <%= f.email_field :email, class: '' %>
+  <%= f.label :password, class: '' %>
+  <%= f.password_field :password, class: '' %>
+  <%= f.submit yield(:button_text), class: '' %>
+<% end %>

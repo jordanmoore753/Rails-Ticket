@@ -23,7 +23,7 @@ class UsersController < ApplicationController
   end
 
   def not_logged_in
-    if cookies[:user_id]
+    if session[:user_id]
       flash[:error] = 'Already logged in.'
       redirect_to root_url
     end

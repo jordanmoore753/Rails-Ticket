@@ -1,6 +1,27 @@
 require 'test_helper'
 
 class UserSignupTest < ActionDispatch::IntegrationTest
+  def setup
+    @user = users(:dave)
+  end
+
+  test 'should not signup, already logged in' do
+    log_in_as(@user)
+
+    assert_no_difference 'User.count' do
+      post signup_path, params: { user: { name: 'Jondar', 
+                                          email: 'jj', 
+                                          password: 'foob1!', 
+                                          password_confirmation: 'foob1!' }}
+    end
+
+    assert_response 302
+    follow_redirect!
+
+    assert_template 'projects/index'
+    assert_not flash.empty?      
+  end
+
   test 'should not signup, not valid email' do
     assert_no_difference 'User.count' do
       post signup_path, params: { user: { name: 'Jondar', 
