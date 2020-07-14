@@ -2,9 +2,11 @@ Rails.application.routes.draw do
   resources :projects
   resources :tickets
   
+  root to: 'projects#index'
+
   # user routes
-  get '/users/new',   to: 'users#new'
-  post '/users',      to: 'users#create'
+  get '/signup',      to: 'users#new'
+  post '/signup',     to: 'users#create'
 
   # session routes
   get '/login',       to: 'sessions#new'
