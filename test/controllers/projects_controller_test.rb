@@ -3,6 +3,7 @@ require 'test_helper'
 class ProjectsControllerTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:dave)
+    @project_one = projects(:one)
   end
 
   test 'should not get new' do
@@ -17,13 +18,13 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not get edit' do
-    get edit_project_url 1
+    get edit_project_url @project_one.id
     assert_response 302
   end
 
   test 'should get edit' do
     log_in_as @user
-    get edit_project_url 1
+    get edit_project_url @project_one.id
     assert_response :success
   end
 
@@ -33,7 +34,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get show' do
-    get project_url 2
+    get project_url @project_one.id
     assert_response :success
   end
 end

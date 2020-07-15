@@ -1,3 +1,3 @@
 class Tag < ApplicationRecord
-  belongs_to :ticket
+  validates :name, presence: true, length: { maximum: 20 }
 end

@@ -3,6 +3,7 @@ require 'test_helper'
 class TagsControllerTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:dave)
+    @tag_one = tags(:one)
   end
 
   test "should not get new" do
@@ -18,12 +19,12 @@ class TagsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get edit' do
     log_in_as(@user)
-    get edit_tag_url 1
+    get edit_tag_url @tag_one
     assert_response :success    
   end
 
   test 'should not get edit' do
-    get edit_tag_url 1
+    get edit_tag_url @tag_one
     assert_response 302   
   end
 

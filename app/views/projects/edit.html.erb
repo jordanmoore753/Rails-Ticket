@@ -1,0 +1,11 @@
+<% provide(:title, 'Edit Project') %>
+
+<h1>Edit Project</h1>
+<%= form_with(model: @project, scope: :project, local: true) do |f| %>
+  <%= render 'shared/error_messages', object: @project %>
+  <%= f.label :name, class: '' %>
+  <%= f.text_field :name, class: '' %>
+  <%= f.label :description, class: '' %>
+  <%= f.text_area :description, class: '' %>
+  <%= f.submit 'Create Project', class: '' %>
+<% end %>

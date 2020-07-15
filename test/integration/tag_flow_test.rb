@@ -12,6 +12,8 @@ class TagFlowTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 302
+    follow_redirect!
+
     assert_template 'tags/index'
     assert_not flash.empty?
   end
@@ -29,9 +31,9 @@ class TagFlowTest < ActionDispatch::IntegrationTest
     assert_template 'tags/index'
     assert_not flash.empty?
 
-    tag_three = tag.find_by(name: 'yes')
+    tag_three = Tag.find_by(name: 'yes')
+
     assert tag_three
-    assert_not tag_three.body
   end
 
   test 'should create tag' do
@@ -44,7 +46,7 @@ class TagFlowTest < ActionDispatch::IntegrationTest
     assert_response 302
     follow_redirect!
 
-    assert_template 'tags/show'
+    assert_template 'tags/index'
     assert_not flash.empty?
   end
 
@@ -53,17 +55,17 @@ class TagFlowTest < ActionDispatch::IntegrationTest
 
     original_name = @tag_one.name
 
-    patch update_tag_url 1, params: { tag: { name: 'shooby' }}
+    patch update_tag_url @tag_one, params: { tag: { name: 'shooby' }}
 
     assert_response 302
     follow_redirect!
 
-    assert_template 'tags/show'
+    assert_template 'tags/index'
     assert_not flash.empty?
 
     @tag_one.reload
 
-    assert_not original_name, @tag_one.name
+    assert_not original_name == @tag_one.name
   end
 
   test 'should update tag without invalid params' do
@@ -71,55 +73,58 @@ class TagFlowTest < ActionDispatch::IntegrationTest
 
     original_name = @tag_one.name
     
-    patch update_tag_url 1, params: { tag: { name: 'yesm', tanker: 'one' }}
-
-    assert_response 302
-    follow_redirect!
-
-    assert_template 'tags/show'
-    assert_not flash.empty?
-    
-    @tag_one.reload
-
-    assert_not original_name, @tag_one.name
-    assert_not @tag_one.tanker
-  end
-
-  test 'should not update tag, not logged in' do
-    original_name = @tag_one.name
-
-    patch update_tag_url 1, params: { tag: { name: 'shooby' }}
-
-    assert_response 200
-    assert_template 'tags/edit'
-    assert_not flash.empty?
-    
-    @tag_one.reload
-
-    assert original_name, @tag_one.name
-  end
-
-  test 'should destroy tag' do
-    log_in_as(@users.first)
-
-    assert_difference 'Tag.count' do
-      delete destroy_tag_url 1
-    end
+    patch update_tag_url @tag_one, params: { tag: { name: 'yesm', tanker: 'one' }}
 
     assert_response 302
     follow_redirect!
 
     assert_template 'tags/index'
     assert_not flash.empty?
+    
+    @tag_one.reload
+
+    assert_not original_name == @tag_one.name
+  end
+
+  test 'should not update tag, not logged in' do
+    original_name = @tag_one.name
+
+    patch update_tag_url @tag_one, params: { tag: { name: 'shooby' }}
+
+    assert_response 302
+    follow_redirect!
+
+    assert_template 'tags/index'
+    assert_not flash.empty?
+    
+    @tag_one.reload
+
+    assert original_name == @tag_one.name
+  end
+
+  test 'should destroy tag' do
+    log_in_as(@users.first)
+
+    initial_count = Tag.all.length
+
+    delete destroy_tag_url @tag_one
+
+    assert_response 302
+    follow_redirect!
+
+    assert_template 'tags/index'
+    assert_not flash.empty?
+    assert initial_count == Tag.all.length + 1
   end
 
   test 'should not destroy tag, not logged in' do
     assert_no_difference 'Tag.count' do
-      delete destroy_tag_url 1
+      delete destroy_tag_url @tag_one
     end
 
-    assert_response 200
-    assert_template 'tags/show'
+    assert_response 302
+    follow_redirect!
+    assert_template 'tags/index'
     assert_not flash.empty?
   end
 end

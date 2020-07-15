@@ -12,22 +12,20 @@ class ProjectFlowTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 302
+    follow_redirect!
+
     assert_template 'projects/index'
     assert_not flash.empty?
   end
 
   test 'should not create project, invalid params' do
-    assert_no_difference 'Project.count' do 
-      post projects_url, params: { project: { name: 'yes' }}
-    end
+    log_in_as @users.first
 
     assert_no_difference 'Project.count' do 
       post projects_url, params: { project: { name: 'yes', sandwich: 'oh yeah!' }}
     end
 
     assert_response 200
-
-    assert_template 'projects/index'
     assert_not flash.empty?
   end
 
@@ -50,7 +48,7 @@ class ProjectFlowTest < ActionDispatch::IntegrationTest
 
     original_name, original_desc = @project_one.name, @project_one.description
 
-    patch project_url 1, params: { project: { name: 'shooby', description: 'yum' }}
+    patch project_url @project_one.id, params: { project: { name: 'shoby', description: 'yum' }}
 
     assert_response 302
     follow_redirect!
@@ -60,8 +58,8 @@ class ProjectFlowTest < ActionDispatch::IntegrationTest
 
     @project_one.reload
 
-    assert_not original_name, @project_one.name
-    assert_not original_desc, @project_one.description
+    assert_not original_name == @project_one.name
+    assert_not original_desc == @project_one.description
   end
 
   test 'should update project without invalid params' do
@@ -69,7 +67,7 @@ class ProjectFlowTest < ActionDispatch::IntegrationTest
 
     original_name, original_desc = @project_one.name, @project_one.description
 
-    patch project_url 1, params: { project: { name: 'shooby', tanker: 'one', description: 'yum' }}
+    patch project_url @project_one.id, params: { project: { name: 'soby', tanker: 'one', description: 'yum' }}
 
     assert_response 302
     follow_redirect!
@@ -79,47 +77,51 @@ class ProjectFlowTest < ActionDispatch::IntegrationTest
     
     @project_one.reload
 
-    assert original_name, @project_one.name
-    assert original_desc, @project_one.description
-    assert_not @project_one.tanker
+    assert_not original_name == @project_one.name
+    assert_not original_desc == @project_one.description
   end
 
   test 'should not update project, not logged in' do
     original_name, original_desc = @project_one.name, @project_one.description
 
-    patch project_url 1, params: { project: { name: 'shooby', description: 'yum' }}
-
-    assert_response 200
-    assert_template 'projects/edit'
-    assert_not flash.empty?
-    
-    @project_one.reload
-
-    assert original_name, @project_one.name
-    assert original_desc, @project_one.description
-  end
-
-  test 'should destroy project' do
-    log_in_as(@users.first)
-
-    assert_difference 'Project.count' do
-      delete project_url 1
-    end
+    patch project_url @project_one.id, params: { project: { name: 'shooby', description: 'yum' }}
 
     assert_response 302
     follow_redirect!
 
     assert_template 'projects/index'
     assert_not flash.empty?
+    
+    @project_one.reload
+
+    assert original_name == @project_one.name
+    assert original_desc == @project_one.description
+  end
+
+  test 'should destroy project' do
+    log_in_as(@users.first)
+
+    number_of_projects = Project.all.length
+
+    delete project_url @project_one
+
+    assert_response 302
+    follow_redirect!
+
+    assert_template 'projects/index'
+    assert_not flash.empty?
+
+    assert number_of_projects == Project.all.length + 1
   end
 
   test 'should not destroy project, not logged in' do
     assert_no_difference 'Project.count' do
-      delete project_url 1
+      delete project_url @project_one.id
     end
 
-    assert_response 200
-    assert_template 'projects/show'
+    assert_response 302
+    follow_redirect!
+    assert_template 'projects/index'
     assert_not flash.empty?
   end
 end

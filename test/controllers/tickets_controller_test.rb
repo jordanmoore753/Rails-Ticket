@@ -3,6 +3,7 @@ require 'test_helper'
 class TicketsControllerTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:dave)
+    @ticket_one = tickets(:one)
   end
 
   test 'should not get new' do
@@ -12,18 +13,18 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get new' do
     log_in_as @user
-    get new_ticket_url 1
+    get new_ticket_url
     assert_response :success
   end
 
   test 'should not get edit' do
-    get edit_ticket_url 1
+    get edit_ticket_url @ticket_one
     assert_response 302
   end
 
   test 'should get edit' do
     log_in_as @user
-    get edit_ticket_url 1
+    get edit_ticket_url @ticket_one
     assert_response :success
   end
 
@@ -33,7 +34,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get show' do
-    get ticket_url 1
+    get ticket_url @ticket_one
     assert_response :success
   end
 end
