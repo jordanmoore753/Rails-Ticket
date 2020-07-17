@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   resources :projects
-  resources :tickets
-  
+  resources :tickets do
+    resources :comments, only: [:edit, :create, :destroy, :update]
+  end
+
   root to: 'projects#index'
 
   # user routes

@@ -1,6 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   name: Ticket 1
   body: The first ticket.
   status: new
@@ -9,6 +10,7 @@ one:
   creator_id: 1
 
 two:
+  id: 2
   name: Ticket 2
   body: The second ticket.
   status: blocked
@@ -17,6 +19,7 @@ two:
   creator_id: 1
 
 three:
+  id: 3
   name: Ticket 3
   body: The third ticket.
   status: in_progress
@@ -25,6 +28,7 @@ three:
   creator_id: 1
 
 four:
+  id: 4
   name: Ticket 4
   body: The fourth ticket.
   status: fixed
