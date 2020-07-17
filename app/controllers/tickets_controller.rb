@@ -19,7 +19,7 @@ class TicketsController < ApplicationController
   end
 
   def create
-    @ticket = Ticket.new ticket_params
+    @ticket = Ticket.new ticket_params.merge(creator: current_user)
 
     if @ticket.save
       @ticket.reload
@@ -59,6 +59,6 @@ class TicketsController < ApplicationController
   end
 
   def ticket_params
-    params.require(:ticket).permit(:name, :body, :status, :assignee, :project_id)
+    params.require(:ticket).permit(:name, :body, :status, :assignee_id, :project_id, tag_ids: [])
   end
 end

@@ -1,2 +1,9 @@
-<h1>Tags#new</h1>
-<p>Find me in app/views/tags/new.html.erb</p>
+<% provide(:title, 'New Tag') %>
+
+<h1>New Tag</h1>
+<%= form_with(model: @tag, scope: :tag, local: true) do |f| %>
+  <%= render 'shared/error_messages', object: @tag %>
+  <%= f.label :name, class: '' %>
+  <%= f.text_field :name, class: '' %>
+  <%= f.submit 'Create Tag', class: '' %>
+<% end %>

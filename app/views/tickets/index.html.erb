@@ -1,0 +1,8 @@
+<h1>Tickets</h1>
+<% @tickets.each do |ticket| %>
+  <li>
+    <%= link_to ticket.name, ticket_path(ticket) %>
+    <%= link_to "Edit", edit_ticket_path(ticket.id) %>
+    <%= link_to "Delete", ticket_path(ticket.id), data: {:confirm => 'Are you sure?'}, method: :delete %>
+  </li>
+<% end %>

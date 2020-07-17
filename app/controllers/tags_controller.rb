@@ -6,6 +6,10 @@ class TagsController < ApplicationController
     @tag = Tag.new
   end
 
+  def index
+    @tags = Tag.all
+  end
+
   def edit
     @tag = Tag.find params[:id]
   end

@@ -1,0 +1,9 @@
+<% provide(:title, 'Edit Tag') %>
+
+<h1>Edit Tag</h1>
+<%= form_with(model: @tag, url: update_tag_path, scope: :tag, local: true) do |f| %>
+  <%= render 'shared/error_messages', object: @tag %>
+  <%= f.label :name, class: '' %>
+  <%= f.text_field :name, class: '' %>
+  <%= f.submit 'Create Tag', class: '' %>
+<% end %>

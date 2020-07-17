@@ -1,0 +1,13 @@
+<h1><%= @ticket.name %></h1>
+<% if @ticket.assignee_id %>
+<p>Assignee: <%= User.find(@ticket.assignee_id).name %></p>
+<% end %>
+
+<p>Project: <%= Project.find(@ticket.project_id).name %></p>
+<p>Body: <%= @ticket.body %></p>
+<h4>Tags</h4>
+<ul>
+<% all_tags(@ticket).each do |tag| %>
+  <li><%= tag %></li>
+<% end %>  
+</ul>

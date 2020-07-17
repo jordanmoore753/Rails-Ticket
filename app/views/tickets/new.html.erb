@@ -1,0 +1,18 @@
+<% provide(:title, 'New Ticket') %>
+
+<h1>New Ticket</h1>
+<%= form_with(model: @ticket, scope: :ticket, local: true) do |f| %>
+  <%= render 'shared/error_messages', object: @ticket %>
+  <%= f.label :project, class: '' %>
+  <%= f.collection_select :project_id, Project.all, :id, :name %>
+  <%= f.label :name, class: '' %>
+  <%= f.text_field :name, class: '' %>
+  <%= f.label :body, class: '' %>
+  <%= f.text_area :body, class: '' %>
+  <%= f.select :status, [['new', 'new'], ['blocked', 'blocked'], ['in-progress', 'in-progress'], ['fixed', 'fixed']] %>
+  <%= f.label :assignee_id, class: '' %>
+  <%= f.collection_select :assignee_id, User.all, :id, :name, include_blank: "No one" %>
+  <%= f.label :tags, class: '' %>
+  <%= f.collection_select :tag_ids, Tag.all, :id, :name, {}, multiple: true, id: :ticket_tag_ids, size: Tag.count %>
+  <%= f.submit 'Create Ticket', class: '' %>
+<% end %>

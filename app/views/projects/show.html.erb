@@ -1,4 +1,19 @@
 <h1><%= @project.name %></h1>
 <p><%= @project.description %></p>
+<ul>
+<% all_tickets(@project).each do |ticket| %>
+  <% if ticket.is_a? String %>
+    <li>
+      <%= ticket %>
+    </li>
+  <% else %>
+    <li>
+      <%= link_to ticket[:name], ticket_path(ticket[:id]) %>
+    </li>
+  <% end %>
+
+<% end %>  
+</ul>
+
 <%= link_to "Edit", edit_project_path(@project.id) %>
 <%= link_to "Delete", project_path(@project.id), data: {:confirm => 'Are you sure?'}, method: :delete %>

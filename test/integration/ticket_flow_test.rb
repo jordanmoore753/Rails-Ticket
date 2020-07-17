@@ -9,7 +9,7 @@ class TicketFlowTest < ActionDispatch::IntegrationTest
 
   test 'should not create ticket, not logged in' do 
     assert_no_difference 'Ticket.count' do 
-      post tickets_url, params: { ticket: { name: 'yes', body: 'woah', status: 'blocked', assignee: @users.first.id, project_id: @project_one_id }}
+      post tickets_url, params: { ticket: { name: 'yes', body: 'woah', status: 'blocked', assignee_id: @users.first.id, project_id: @project_one_id }}
     end
 
     assert_response 302
@@ -23,7 +23,7 @@ class TicketFlowTest < ActionDispatch::IntegrationTest
     log_in_as(@users.first)
 
     assert_difference 'Ticket.count' do 
-      post tickets_url, params: { ticket: { name: 'yes', body: 'woah', status: 'blocked', sandwich: 'oh yeah!', assignee: @users.first.id, project_id: @project_one_id }}
+      post tickets_url, params: { ticket: { name: 'yes', body: 'woah', status: 'blocked', sandwich: 'oh yeah!', assignee_id: @users.first.id, project_id: @project_one_id }}
     end
 
     assert_response 302
@@ -40,7 +40,7 @@ class TicketFlowTest < ActionDispatch::IntegrationTest
     log_in_as(@users.first)
 
     assert_difference 'Ticket.count' do 
-      post tickets_url, params: { ticket: { name: 'yes', body: 'woah', status: 'blocked', assignee: @users.first.id, project_id: @project_one_id }}
+      post tickets_url, params: { ticket: { name: 'yes', body: 'woah', status: 'blocked', assignee_id: @users.first.id, project_id: @project_one_id }}
     end
 
     assert_response 302
@@ -55,7 +55,7 @@ class TicketFlowTest < ActionDispatch::IntegrationTest
 
     original_name, original_body, original_status = @ticket_one.name, @ticket_one.body, @ticket_one.status
 
-    patch ticket_url @ticket_one.id, params: { ticket: { name: 'shooby', body: 'yum', status: 'fixed', assignee: @users.first.id, project_id: @project_one_id }}
+    patch ticket_url @ticket_one.id, params: { ticket: { name: 'shooby', body: 'yum', status: 'fixed', assignee_id: @users.first.id, project_id: @project_one_id }}
 
     assert_response 302
     follow_redirect!
@@ -75,7 +75,7 @@ class TicketFlowTest < ActionDispatch::IntegrationTest
 
     original_name, original_body, original_status = @ticket_one.name, @ticket_one.body, @ticket_one.status
 
-    patch ticket_url @ticket_one.id, params: { ticket: { name: 'yesm', body: 'woahm', status: 'fixed', tanker: 'one', assignee: @users.first.id, project_id: @project_one_id }}
+    patch ticket_url @ticket_one.id, params: { ticket: { name: 'yesm', body: 'woahm', status: 'fixed', tanker: 'one', assignee_id: @users.first.id, project_id: @project_one_id }}
 
     assert_response 302
     follow_redirect!
@@ -93,7 +93,7 @@ class TicketFlowTest < ActionDispatch::IntegrationTest
   test 'should not update ticket, not logged in' do
     original_name, original_body, original_status = @ticket_one.name, @ticket_one.body, @ticket_one.status
 
-    patch ticket_url @ticket_one.id, params: { ticket: { name: 'shooby', body: 'yum', status: 'blocked', assignee: @users.first.id, project_id: @project_one_id }}
+    patch ticket_url @ticket_one.id, params: { ticket: { name: 'shooby', body: 'yum', status: 'blocked', assignee_id: @users.first.id, project_id: @project_one_id }}
 
     assert_response 302
     follow_redirect!
