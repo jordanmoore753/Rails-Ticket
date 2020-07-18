@@ -23,7 +23,7 @@ three:
   name: Ticket 3
   body: The third ticket.
   status: in_progress
-  project_id: 1
+  project_id: 2
   assignee_id: 2
   creator_id: 1
 

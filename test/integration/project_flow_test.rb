@@ -98,7 +98,7 @@ class ProjectFlowTest < ActionDispatch::IntegrationTest
     assert original_desc == @project_one.description
   end
 
-  test 'should destroy project' do
+  test 'should destroy project and all associated tickets/comments' do
     log_in_as(@users.first)
 
     number_of_projects = Project.all.length
@@ -112,6 +112,11 @@ class ProjectFlowTest < ActionDispatch::IntegrationTest
     assert_not flash.empty?
 
     assert number_of_projects == Project.all.length + 1
+
+    # check that associated data is deleted, too
+
+    assert Ticket.all.length == 1
+    assert Comment.all.length == 1
   end
 
   test 'should not destroy project, not logged in' do

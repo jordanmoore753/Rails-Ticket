@@ -93,7 +93,7 @@ class CommentFlowTest < ActionDispatch::IntegrationTest
   test 'should destroy' do
     log_in_as @dave
 
-    assert Comment.all.length == 2
+    assert Comment.all.length == 3
     
     delete ticket_comment_path(1,1)
 
@@ -101,7 +101,7 @@ class CommentFlowTest < ActionDispatch::IntegrationTest
     follow_redirect!
 
     assert_template 'tickets/show'
-    assert Comment.all.length == 1
+    assert Comment.all.length == 2
     assert_not flash.empty?   
   end
 end
