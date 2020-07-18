@@ -48,6 +48,24 @@ class CommentFlowTest < ActionDispatch::IntegrationTest
     assert_not flash.empty?
   end
 
+  test 'should create and update status' do
+    log_in_as @dave
+    
+    first_ticket = Ticket.first
+    ticket_status_original = Ticket.first.status
+
+    post ticket_comments_url(1), params: { status: 'fixed', comment: { body: 'yesir' }}
+
+    assert_response 302
+    follow_redirect!
+
+    first_ticket.reload
+ 
+    assert first_ticket.status != ticket_status_original
+    assert_template 'tickets/show'
+    assert_not flash.empty?
+  end
+
   test 'should not create, not logged in' do
     post ticket_comments_url(1), params: { comment: { body: 'WOAH!' }}
 

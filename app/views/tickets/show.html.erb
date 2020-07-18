@@ -5,9 +5,20 @@
 
 <p>Project: <%= Project.find(@ticket.project_id).name %></p>
 <p>Body: <%= @ticket.body %></p>
+<p>Status: <%= @ticket.status.titleize %></p>
 <h4>Tags</h4>
 <ul>
 <% all_tags(@ticket).each do |tag| %>
   <li><%= tag %></li>
 <% end %>  
 </ul>
+<%= render partial: 'comments/new', locals: { ticket: @ticket } %>
+<% if @ticket.comments.any? %> 
+  <ul>
+    <% all_comments(@ticket).each do |comment| %>
+      <li><%= comment[:body] %>, written by <%= comment[:creator] %></li>
+    <% end %>  
+  </ul>
+<% else %>
+  <p>No comments.</p>
+<% end %>

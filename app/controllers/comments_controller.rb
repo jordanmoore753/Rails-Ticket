@@ -23,6 +23,11 @@ class CommentsController < ApplicationController
     @comment = Comment.new comment_params.merge(creator_id: current_user.id, ticket_id: params[:ticket_id])
     
     if @comment.save
+      if params[:status].present?
+        @ticket = Ticket.find params[:ticket_id]
+        @ticket.update_attribute(:status, params[:status])
+      end
+
       flash[:success] = 'Successfully created comment.'
       redirect_to ticket_path params[:ticket_id]
     else

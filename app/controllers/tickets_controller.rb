@@ -11,6 +11,7 @@ class TicketsController < ApplicationController
   end
 
   def show
+    @comment = Comment.new
     @ticket = Ticket.find params[:id]
   end
 
