@@ -1,8 +1,22 @@
 <h1>Tickets</h1>
-<% @tickets.each do |ticket| %>
-  <li>
-    <%= link_to ticket.name, ticket_path(ticket) %>
-    <%= link_to "Edit", edit_ticket_path(ticket.id) %>
-    <%= link_to "Delete", ticket_path(ticket.id), data: {:confirm => 'Are you sure?'}, method: :delete %>
-  </li>
+<h2>Filter Tickets</h2>
+<%= form_tag tickets_path, method: :get, enforce_utf8: false do %>
+  <p>Show tickets from
+    <%= select_tag :project, options_from_collection_for_select(Project.all, :id, :name, params[:project]), include_blank: "All Projects" %>
+    <%= select_tag :status, options_for_select([['New', 'new'], ['Blocked', 'blocked'], ['In Progress', 'in_progress'], ['Fixed', 'fixed']], params[:status]), include_blank: 'Any Status' %>
+    <%= select_tag :tag, options_from_collection_for_select(Tag.all, :id, :name, params[:tag]), include_blank: '-' %>
+    <%= button_tag 'Filter', { class: 'button' } %>
+    <%= link_to 'Clear Filters', tickets_path %>
+  </p>
+<% end %>
+<% if @tickets.length.zero? %>
+  <p>No matching tickets could be found. Try <%= link_to 'clearing filters', tickets_path %> to find all tickets.</p>
+<% else %>
+  <% @tickets.each do |ticket| %>
+    <li>
+      <%= link_to ticket.name, ticket_path(ticket) %>
+      <%= link_to "Edit", edit_ticket_path(ticket.id) %>
+      <%= link_to "Delete", ticket_path(ticket.id), data: {:confirm => 'Are you sure?'}, method: :delete %>
+    </li>
+  <% end %>
 <% end %>
