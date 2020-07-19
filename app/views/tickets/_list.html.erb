@@ -15,7 +15,7 @@
         <td><%= all_tags(ticket) %></td>
         <td>
           <%= link_to 'Edit', edit_ticket_path(ticket) %>
-          , 
+          or 
           <%= link_to 'Delete', ticket_path, method: :delete, data: { confirm: 'Are you sure?' } %>
         </td>
       </tr>

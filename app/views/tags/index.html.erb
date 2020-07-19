@@ -15,10 +15,10 @@
         <% @tags.each do |tag| %>
           <tr>
             <td><%= tag.name %></td>
-            <td><%= link_to ticket_counts(tag), tickets_path( tag: tag.id) %></td>
+            <td><%= link_to tag.taggings.length, tickets_path( tag: tag.id) %></td>
             <td>
               <%= link_to 'Edit', edit_tag_path(tag) %>
-              , 
+              or
               <%= link_to 'Delete', destroy_tag_path(tag), method: :delete, data: { confirm: 'Are you sure?' } %>
             </td>
           </tr>

@@ -41,7 +41,7 @@
             <% end %>
             <td><%= ticket.status.titleize %></td>
             <td><%= ticket.tags.length > 0 ? ticket.tags.map(&:name).join(', ') : '-' %></td>
-            <td><%= link_to "Edit", edit_ticket_path(ticket.id) %>,             <%= link_to "Delete", ticket_path(ticket.id), data: {:confirm => 'Are you sure?'}, method: :delete %></td>
+            <td><%= link_to "Edit", edit_ticket_path(ticket.id) %> or          <%= link_to "Delete", ticket_path(ticket.id), data: {:confirm => 'Are you sure?'}, method: :delete %></td>
           </tr>
         <% end %>
       </tbody>
