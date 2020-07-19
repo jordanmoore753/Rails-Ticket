@@ -1,6 +1,6 @@
 module TicketsHelper
   def all_tags(ticket)
-    ticket.tags.any? ? ticket.tags.map(&:name).join(', ') : "No tags to show."
+    ticket.tags.any? ? ticket.tags.alphabetize.map(&:name).join(', ') : "-"
   end
 
   def all_comments(ticket)

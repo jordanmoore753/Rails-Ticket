@@ -13,7 +13,7 @@
           <%= select_tag :status, options_for_select([['New', 'new'], ['Blocked', 'blocked'], ['In Progress', 'in_progress'], ['Fixed', 'fixed']], params[:status]), include_blank: 'Any Status' %>
         </div>
         <div class="select">
-          <%= select_tag :tag, options_from_collection_for_select(Tag.all, :id, :name, params[:tag]), include_blank: '-' %>
+          <%= select_tag :tag, options_from_collection_for_select(Tag.all.alphabetize, :id, :name, params[:tag]), include_blank: '-' %>
         </div>
         <%= button_tag 'Filter', { class: 'button is-info' } %>
         <%= link_to 'Clear Filters', tickets_path, class: 'button is-light' %>
@@ -40,7 +40,7 @@
               <td>-</td>
             <% end %>
             <td><%= ticket.status.titleize %></td>
-            <td><%= ticket.tags.length > 0 ? ticket.tags.map(&:name).join(', ') : '-' %></td>
+            <td><%= ticket.tags.length > 0 ? ticket.tags.alphabetize.map(&:name).join(', ') : '-' %></td>
             <td><%= link_to "Edit", edit_ticket_path(ticket.id) %> or          <%= link_to "Delete", ticket_path(ticket.id), data: {:confirm => 'Are you sure?'}, method: :delete %></td>
           </tr>
         <% end %>

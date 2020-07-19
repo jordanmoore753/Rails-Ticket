@@ -10,7 +10,7 @@
     <% tickets.each do |ticket| %>
       <tr>
         <td><%= link_to ticket.name, ticket_path %></td>
-        <td><%= ticket.assignee.try(:name) %></td>
+        <td><%= ticket.assignee.try(:name).nil? ? '-' : ticket.assignee.try(:name) %></td>
         <td><%= ticket.status.titleize %></td>
         <td><%= all_tags(ticket) %></td>
         <td>

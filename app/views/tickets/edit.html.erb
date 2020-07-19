@@ -35,7 +35,7 @@
   <div class="field">
     <%= f.label :tags, class: 'label' %>
     <div class="select is-multiple">
-      <%= f.collection_select :tag_ids, Tag.all, :id, :name, {}, multiple: true, id: :ticket_tag_ids, size: Tag.count %>
+      <%= f.collection_select :tag_ids, Tag.all.alphabetize, :id, :name, {}, multiple: true, id: :ticket_tag_ids, size: Tag.count %>
     </div>
   </div>
   <div class="field">
