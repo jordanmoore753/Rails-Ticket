@@ -1,11 +1,21 @@
 <% provide(:title, 'Login') %>
 <% provide(:button_text, 'Login') %>
 
-<h1>Login</h1>
-<%= form_with(url: login_url, scope: :session, local: true) do |f| %>
-  <%= f.label :email, class: '' %>
-  <%= f.email_field :email, class: '' %>
-  <%= f.label :password, class: '' %>
-  <%= f.password_field :password, class: '' %>
-  <%= f.submit yield(:button_text), class: '' %>
-<% end %>
+<div class="content">
+  <h1>Login</h1>
+  <hr class="small-separate">
+  <%= form_with(url: login_url, scope: :session, local: true) do |f| %>
+    <%= render 'shared/error_messages', object: @user %>
+    <div class="field">
+      <%= f.label :email, class: 'label' %>
+      <%= f.email_field :email, class: 'input' %>
+    </div>
+    <div class="field">
+      <%= f.label :password, class: 'label' %>
+      <%= f.password_field :password, class: 'input' %>
+    </div>
+    <div class="field">
+      <%= f.submit yield(:button_text), class: "button is-info" %>
+    </div>
+  <% end %>
+</div>

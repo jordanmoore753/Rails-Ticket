@@ -1,5 +1,29 @@
-<h1>Tags</h1>
-<% @tags.each do |tag| %>
-  <p><%= tag.name %></p>
-  <%= link_to ticket_counts(tag), tickets_path( tag: tag.id) %>
-<% end %>
+<div class="content">
+  <h1>Tags</h1>
+  <%= link_to 'New Tag', tags_new_path, class: 'button is-info' %>
+  <hr class="small-separate">
+  <% if @tags.nil? %>
+    <p>No tags.</p>
+  <% else %>
+    <table class="table">
+      <thead>
+        <th>Name</th>
+        <th>Tickets</th>
+        <th>Actions</th>
+      </thead>
+      <tbody>
+        <% @tags.each do |tag| %>
+          <tr>
+            <td><%= tag.name %></td>
+            <td><%= link_to ticket_counts(tag), tickets_path( tag: tag.id) %></td>
+            <td>
+              <%= link_to 'Edit', edit_tag_path(tag) %>
+              , 
+              <%= link_to 'Delete', destroy_tag_path(tag), method: :delete, data: { confirm: 'Are you sure?' } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>
