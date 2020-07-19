@@ -1,9 +1,17 @@
 <h2>Add Comment</h2>
 <%= form_with(model: Comment.new, url: ticket_comments_path(ticket), scope: :comment, local: true) do |f| %>
   <%= render 'shared/error_messages', object: Comment.new %>
-  <%= select_tag :status, options_for_select([['New', 'new'], ['Blocked', 'blocked'], ['In Progress', 'in_progress'], ['Fixed', 'fixed']]), include_blank: 'Do Not Update Status' %>
-  <%= f.label :body, class: '' %>
-  <%= f.text_area :body, class: '' %>
-  <%= f.submit 'Create Comment', class: '' %>
+  <div class="field">
+    <div class="select">
+      <%= select_tag :status, options_for_select([['New', 'new'], ['Blocked', 'blocked'], ['In Progress', 'in_progress'], ['Fixed', 'fixed']]), include_blank: 'Do Not Update Status' %>
+    </div>
+  </div>
+  <div class="field">
+    <%= f.label :body, class: 'label' %>
+    <%= f.text_area :body, class: 'textarea' %>
+  </div>
+  <div class="field">
+    <%= f.submit 'Create Comment', class: 'button is-info' %>
+  </div>
 <% end %>
 

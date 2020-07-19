@@ -1,9 +1,24 @@
-<h1>All Projects</h1>
-<% if @projects %>
-  <% @projects.each do |project| %>
-    <h2><%= link_to project.name, project_path(project.id) %></h2>
-    <p><%= project.description %></p>
+<div class="content">
+  <h1>All Projects</h1>
+</div>
+<div class="buttons">
+  <%= link_to 'Create Project', new_project_path, class: 'button is-info' %>
+</div>
+<table class="table">
+  <thead>
+    <th>Name</th>
+    <th>Total Tickets</th>
+  </thead>
+  <tbody>
+  <% if @projects.length.zero? %>
+    <p>No projects.</p>
+  <% else %>
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= link_to project.name, project_path(project) %></td>
+        <td><%= project.tickets.length %></td>
+      </tr>
+    <% end %>
   <% end %>
-<% else %>
-  <p>No projects to show.</p>
-<% end %>
+  </tbody>
+</table>

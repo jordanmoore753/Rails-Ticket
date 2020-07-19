@@ -1,0 +1,9 @@
+<% if flash[:success] || flash[:error] %>
+<div class="content flasher">
+  <% if flash[:success] %>
+    <p class=""><%= flash[:success] %></p>
+  <% else %>
+    <p class="has-background-danger"><%= flash[:error] %></p>
+  <% end %>
+</div>
+<% end %>

@@ -1,0 +1,22 @@
+<table class="table">
+  <thead>
+    <th>Status</th>
+    <th>Creator</th>
+    <th>Assignee</th>
+  </thead>
+  <tbody>
+    <% tickets.each do |ticket| %>
+      <tr>
+        <td><%= link_to ticket.name, ticket_path %></td>
+        <td><%= ticket.assignee.try(:name) %></td>
+        <td><%= ticket.status.titleize %></td>
+        <td><%= all_tags(ticket) %></td>
+        <td>
+          <%= link_to 'Edit', edit_ticket_path(ticket) %>
+          , 
+          <%= link_to 'Delete', ticket_path, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

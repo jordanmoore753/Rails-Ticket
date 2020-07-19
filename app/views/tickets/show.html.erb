@@ -1,24 +1,38 @@
-<h1><%= @ticket.name %></h1>
-<% if @ticket.assignee_id %>
-<p>Assignee: <%= User.find(@ticket.assignee_id).name %></p>
-<% end %>
-
-<p>Project: <%= Project.find(@ticket.project_id).name %></p>
-<p>Body: <%= @ticket.body %></p>
-<p>Status: <%= @ticket.status.titleize %></p>
-<h4>Tags</h4>
-<ul>
-<% all_tags(@ticket).each do |tag| %>
-  <li><%= tag %></li>
-<% end %>  
-</ul>
-<%= render partial: 'comments/new', locals: { ticket: @ticket } %>
-<% if @ticket.comments.any? %> 
-  <ul>
+<div class="content">
+  <h1><%= @ticket.name %></h1>
+  <p><%= @ticket.body %></p>
+  <div class="buttons">
+    <%= link_to 'Edit', edit_ticket_path(@ticket.id), class: 'button is-info' %>
+    <%= link_to "Delete", ticket_path(@ticket.id), data: {:confirm => 'Are you sure?'}, method: :delete, class: 'button is-danger' %>
+  </div>
+  <hr class="small-separate">
+  <table class="table">
+    <thead>
+      <th>Status</th>
+      <th>Creator</th>
+      <th>Assignee</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= @ticket.status.titleize %></td>
+        <td><%= User.find(@ticket.creator_id).name %></td>
+        <% if @ticket.assignee_id %>
+          <td><%= User.find(@ticket.assignee_id).name %></td>
+        <% else %>
+          <td>-</td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+  <hr class="small-separate">
+  <%= render partial: 'comments/new', locals: { ticket: @ticket } %>
+  <hr class="small-separate">
+  <% if @ticket.comments.any? %> 
     <% all_comments(@ticket).each do |comment| %>
-      <li><%= comment[:body] %>, written by <%= comment[:creator] %></li>
+      <%= render partial: 'shared/comment', locals: { body: comment[:body], name: comment[:creator], time: comment[:created_at] } %>
     <% end %>  
-  </ul>
-<% else %>
-  <p>No comments.</p>
-<% end %>
+  <% else %>
+    <p>No comments.</p>
+  <% end %>
+</div>
+

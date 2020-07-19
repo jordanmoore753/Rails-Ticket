@@ -20,6 +20,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'minitest-reporters', '~> 1.1', '>= 1.1.11'
 gem 'bcrypt', '~> 3.1', '>= 3.1.12'
 gem 'rails-controller-testing'
+gem "bulma-rails", "~> 0.9.0"
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
